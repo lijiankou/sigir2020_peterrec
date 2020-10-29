@@ -20,8 +20,7 @@ def sample_top_k(a=[], top_k=10):
     # choice = np.random.choice(idx, p=probs)
     return idx
 
-print sample_top_k(np.array([0.02,0.01,0.01,0.16,0.8]),3)
-
+print(sample_top_k(np.array([0.02,0.01,0.01,0.16,0.8]),3))
 
 
 # unit_sequence_lens=3 should be >= 2, otherwise there will be a bug, the default value is 3
@@ -238,7 +237,7 @@ item_batch=[[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20,21,22,23,24,25,2
 # self.input_predict = self.input_predict[:, 0:-1]
 a=[1]
 a=a[0:-1]
-print a
+print(a)
 # item_batch=[[1,2,3,4,5,6,7],[1,2,3,4,5]]
 # item_batch=[[fajieitem1, fajieitem19, fajieitem3,fajieitem15,fajieitem12,fajieitem20],
 #                     [fajieitem12,fajieitem15, fajieitem6,fajieitem3,fajieitem27,fajieitem20],

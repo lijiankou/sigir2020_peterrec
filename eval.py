@@ -1,6 +1,6 @@
 import tensorflow as tf
 
-import cPickle
+import _pickle as cPickle
 import numpy as np
 import multiprocessing
 
@@ -18,4 +18,4 @@ def ndcg_at_k(r, k):
         return 0.
     return dcg_at_k(r, k) / dcg_max
 r=np.array([1,0,0,0,0,0,0,0,0,0])
-print ndcg_at_k(r,6)
+print(ndcg_at_k(r,6))

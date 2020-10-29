@@ -10,9 +10,6 @@ import numpy as np
 import argparse
 import sys
 
-
-
-
 def generatesubsequence(train_set,padtoken):
     # create subsession only for training
     subseqtrain = []
@@ -48,7 +45,7 @@ def generatesubsequence(train_set,padtoken):
     np.random.seed(10)
     shuffle_train = np.random.permutation(np.arange(len(x_train)))
     x_train = x_train[shuffle_train]
-    print "generating subsessions is done!"
+    print("generating subsessions is done!")
     return x_train
 
 
@@ -73,12 +70,11 @@ def main():
                         help='is the padding token in the beggining of the sequence')
     args = parser.parse_args()
 
-
-
     dl = data_loader_recsys.Data_Loader({'model_type': 'generator', 'dir_name': args.datapath})
     all_samples = dl.item
     items = dl.item_dict
-    print "len(items)",len(items)
+    print("len(items)")
+    print(len(items))
 
     if items.has_key(args.padtoken):
         padtoken = items[args.padtoken]  # is the padding token in the beggining of the sentence
@@ -154,14 +150,14 @@ def main():
                 })
             end = time.time()
             if numIters % args.eval_iter == 0:
-                print "-------------------------------------------------------train1"
-                print "LOSS: {}\tITER: {}\tBATCH_NO: {}\t STEP:{}\t total_batches:{}".format(
-                    loss, iter, batch_no, numIters, train_set.shape[0] / batch_size)
-                print "TIME FOR BATCH", end - start
-                print "TIME FOR ITER (mins)", (end - start) * (train_set.shape[0] / batch_size) / 60.0
+                print("-------------------------------------------------------train1")
+                print("LOSS: {}\tITER: {}\tBATCH_NO: {}\t STEP:{}\t total_batches:{}".format(
+                    loss, iter, batch_no, numIters, train_set.shape[0] / batch_size))
+                print("TIME FOR BATCH", end - start)
+                print("TIME FOR ITER (mins)", (end - start) * (train_set.shape[0] / batch_size) / 60.0)
 
             if numIters % args.eval_iter == 0:
-                print "-------------------------------------------------------test1"
+                print("-------------------------------------------------------test1")
                 if (batch_no + 1) * batch_size < valid_set.shape[0]:
                     # it is well written here when train_set is much larger than valid_set, 'if' may not hold. it will not have impact on the final results.
                     item_batch = valid_set[(batch_no) * batch_size: (batch_no + 1) * batch_size, :]
@@ -170,8 +166,8 @@ def main():
                     feed_dict={
                         itemrec.input_predict: item_batch
                     })
-                print "LOSS: {}\tITER: {}\tBATCH_NO: {}\t STEP:{}\t total_batches:{}".format(
-                    loss, iter, batch_no, numIters, valid_set.shape[0] / batch_size)
+                print("LOSS: {}\tITER: {}\tBATCH_NO: {}\t STEP:{}\t total_batches:{}".format(
+                    loss, iter, batch_no, numIters, valid_set.shape[0] / batch_size))
 
             batch_no += 1
             if numIters % args.eval_iter == 0:
@@ -232,13 +228,13 @@ def main():
 
 
                     batch_no_test += 1
-                    print "BATCH_NO: {}".format(batch_no_test)
-                    print "Accuracy mrr_5:",sum(curr_preds_5) / float(len(curr_preds_5))#5
-                    print "Accuracy mrr_20:", sum(curr_preds_20) / float(len(curr_preds_20))  # 5
-                    print "Accuracy hit_5:", sum(rec_preds_5) / float(len(rec_preds_5))#5
-                    print "Accuracy hit_20:", sum(rec_preds_20) / float(len(rec_preds_20))  # 5
-                    print "Accuracy ndcg_5:", sum(ndcg_preds_5) / float(len(ndcg_preds_5))  # 5
-                    print "Accuracy ndcg_20:", sum(ndcg_preds_20) / float(len(ndcg_preds_20))  #
+                    print("BATCH_NO: {}".format(batch_no_test))
+                    print("Accuracy mrr_5:",sum(curr_preds_5) / float(len(curr_preds_5)))#5
+                    print("Accuracy mrr_20:", sum(curr_preds_20) / float(len(curr_preds_20)))  # 5
+                    print("Accuracy hit_5:", sum(rec_preds_5) / float(len(rec_preds_5)))#5
+                    print("Accuracy hit_20:", sum(rec_preds_20) / float(len(rec_preds_20)))  # 5
+                    print("Accuracy ndcg_5:", sum(ndcg_preds_5) / float(len(ndcg_preds_5)))  # 5
+                    print("Accuracy ndcg_20:", sum(ndcg_preds_20) / float(len(ndcg_preds_20)))  #
             numIters += 1
             if numIters % args.save_para_every == 0:
                 save_path = saver.save(sess,
