@@ -51,9 +51,7 @@ def generatesubsequence(train_set,padtoken):
     print("generating subsessions is done!")
     return x_train
 
-
-def main():
-    parser = argparse.ArgumentParser()
+def GetParser(parser):
     parser.add_argument('--top_k', type=int, default=5,
                         help='Sample from top k predictions')
     parser.add_argument('--beta1', type=float, default=0.9,
@@ -71,9 +69,11 @@ def main():
                         help='whether generating a subsessions, e.g., 12345-->01234,00123,00012  It may be useful for very some very long sequences')
     parser.add_argument('--padtoken', type=str, default='0',
                         help='is the padding token in the beggining of the sequence')
+
+def main():
+    parser = argparse.ArgumentParser()
+    parser = GetParser(parser)
     args = parser.parse_args()
-
-
 
     dl = data_loader_recsys.Data_Loader({'model_type': 'generator', 'dir_name': args.datapath})
     all_samples = dl.item
@@ -125,17 +125,11 @@ def main():
     tf.add_to_collection("context_embedding", itemrec.context_embedding)
 
 
-
-
-
     # sess= tf.Session(config=tf.ConfigProto(log_device_placement=True))
     sess = tf.Session()
     init=tf.global_variables_initializer()
     sess.run(init)
     saver = tf.train.Saver()
-
-
-
 
     numIters = 1
     for iter in range(model_para['iterations']):
